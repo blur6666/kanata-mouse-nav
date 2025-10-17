@@ -13,26 +13,22 @@
   lctl lmet lalt           spc            ralt rmet rctl      left down rght 
 )
 
-(deflayer qwerty
-  esc  f1   f2   f3   f4   f5   f6   f7   f8   f9   f10  f11  f12
-  grv  1    2    3    4    5    6    7    8    9    0    -    =   bspc
-  tab  q    w    e    r    t    y    u    i    o    p    [    ]   \
-  @mse a    s    d    f    g    h    j    k    l    ;    '    ret
-  lsft z    x    c    v    b    n    m    ,    .    /    rsft          up        
-  lctl lmet lalt           @spc           ralt rmet rctl          left down rght 
-)
-
 (defalias
-  mse (tap-hold 200 200 mse (layer-while-held mouse))
-  spc (tap-hold 200 200 spc (layer-while-held navigation))
+  mse (tap-hold 200 200 tab (layer-while-held mouse))
+  ext (tap-hold 200 200 spc (layer-while-held extend))
 )
 
 (defvirtualkeys
-  mouse-up (movemouse-accel-up 1 700 1 3)
-  mouse-down (movemouse-accel-down 1 700 1 3)
-  mouse-left (movemouse-accel-left 1 700 1 3)
-  mouse-right (movemouse-accel-right 1 700 1 3)
+  mouse-up (movemouse-accel-up 1 2000 1 2)
+  mouse-down (movemouse-accel-down 1 2000 1 2)
+  mouse-left (movemouse-accel-left 1 2000 1 2)
+  mouse-right (movemouse-accel-right 1 2000 1 2)
 
+  ;; mouse-up (movemouse-up 1 2
+  ;; mouse-down (movemouse-down 1 2)
+  ;; mouse-left (movemouse-left 1 2)
+  ;; mouse-right (movemouse-right 1 2)
+  
   up-held nop0
   left-held nop1
   down-held nop2
@@ -56,7 +52,16 @@
   mwr (mwheel-right 50 120)
 )
 
-(deflayer navigation
+(deflayer qwerty
+  esc  f1   f2   f3   f4   f5   f6   f7   f8   f9   f10  f11  f12
+  grv  1    2    3    4    5    6    7    8    9    0    -    =   bspc
+  tab  q    w    e    r    t    y    u    i    o    p    [    ]   \
+  @mse a    s    d    f    g    h    j    k    l    ;    '    ret
+  lsft z    x    c    v    b    n    m    ,    .    /    rsft          up        
+  lctl lmet lalt           @ext           ralt rmet rctl          left down rght 
+)
+
+(deflayer extend
 _    _    _    _    _    _    _    _    _    _    _    _    _
 _    _    _    _    _    _    _    _    _    _    _    _    _    _
 _    _    _    _    _    _    ins  home up   end  pgup _    _    _
