@@ -1,0 +1,75 @@
+(defcfg
+  process-unmapped-keys yes
+  movemouse-inherit-accel-state yes
+  movemouse-smooth-diagonals yes
+)
+
+(defsrc
+  esc  f1   f2   f3   f4   f5   f6   f7   f8   f9   f10  f11  f12
+  grv  1    2    3    4    5    6    7    8    9    0    -    =   bspc
+  tab  q    w    e    r    t    y    u    i    o    p    [    ]   \
+  caps a    s    d    f    g    h    j    k    l    ;    '    ret
+  lsft z    x    c    v    b    n    m    ,    .    /    rsft      up        
+  lctl lmet lalt           spc            ralt rmet rctl      left down rght 
+)
+
+(deflayer qwerty
+  esc  f1   f2   f3   f4   f5   f6   f7   f8   f9   f10  f11  f12
+  grv  1    2    3    4    5    6    7    8    9    0    -    =   bspc
+  tab  q    w    e    r    t    y    u    i    o    p    [    ]   \
+  @mse a    s    d    f    g    h    j    k    l    ;    '    ret
+  lsft z    x    c    v    b    n    m    ,    .    /    rsft          up        
+  lctl lmet lalt           @spc           ralt rmet rctl          left down rght 
+)
+
+(defalias
+  mse (tap-hold 200 200 mse (layer-while-held mouse))
+  spc (tap-hold 200 200 spc (layer-while-held navigation))
+)
+
+(defvirtualkeys
+  mouse-up (movemouse-accel-up 1 700 1 3)
+  mouse-down (movemouse-accel-down 1 700 1 3)
+  mouse-left (movemouse-accel-left 1 700 1 3)
+  mouse-right (movemouse-accel-right 1 700 1 3)
+
+  up-held nop0
+  left-held nop1
+  down-held nop2
+  right-held nop3
+  
+  up-mouse-rel (multi (on-press release-vkey up-held) (on-press release-vkey mouse-up) (switch ((input virtual down-held)) (on-press press-vkey mouse-down) break () XX break))
+  left-mouse-rel (multi (on-press release-vkey left-held) (on-press release-vkey mouse-left) (switch ((input virtual right-held)) (on-press press-vkey mouse-right) break () XX break))
+  down-mouse-rel (multi (on-press release-vkey down-held) (on-press release-vkey mouse-down) (switch ((input virtual up-held)) (on-press press-vkey mouse-up) break () XX break))
+  right-mouse-rel (multi (on-press release-vkey right-held) (on-press release-vkey mouse-right) (switch ((input virtual left-held)) (on-press press-vkey mouse-left) break () XX break))
+)
+
+(defalias
+  ms↑ (multi (on-press press-vkey up-held) (on-press release-vkey mouse-down) (on-press press-vkey mouse-up) (on-release tap-vkey up-mouse-rel))
+  ms← (multi (on-press press-vkey left-held) (on-press release-vkey mouse-right) (on-press press-vkey mouse-left) (on-release tap-vkey left-mouse-rel))
+  ms↓ (multi (on-press press-vkey down-held) (on-press release-vkey mouse-up) (on-press press-vkey mouse-down) (on-release tap-vkey down-mouse-rel))
+  ms→ (multi (on-press press-vkey right-held) (on-press release-vkey mouse-left) (on-press press-vkey mouse-right) (on-release tap-vkey right-mouse-rel))
+  
+  mwu (mwheel-up 50 120)
+  mwd (mwheel-down 50 120)
+  mwl (mwheel-left 50 120)
+  mwr (mwheel-right 50 120)
+)
+
+(deflayer navigation
+_    _    _    _    _    _    _    _    _    _    _    _    _
+_    _    _    _    _    _    _    _    _    _    _    _    _    _
+_    _    _    _    _    _    ins  home up   end  pgup _    _    _
+_    lmet lalt lsft lctl _    esc  left down rght pgdn _    _
+_    _    _    _    _    _    tab  del  spc  bspc _    _         _        
+_    _    _              _              _    _    _         _    _    _ 
+)
+
+(deflayer mouse
+_    _    _    _    _    _    _    _    _    _    _    _    _
+_    _    _    _    _    _    _    _    _    _    _    _    _    _
+_    _    _    _    _    _    @mwu mlft @ms↑ mrgt _    _    _    _
+_    _    _    _    _    _    @mwd @ms← @ms↓ @ms→ mmid _    _
+_    _    _    _    _    _    _    _    _    _    _    _         _        
+_    _    _              _              _    _    _         _    _    _ 
+)
